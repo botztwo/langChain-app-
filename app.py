@@ -36,15 +36,19 @@ def main():
     if pdf is not None:
         pdf_reader = PdfReader(pdf)
 
+        #go through all the pages in the pdf and add them to the text variable
         text = ""
         for page in pdf_reader.pages:
             text += page.extract_text()
+
 
         text_splitter = RecursiveCharacterTextSplitter(
             chunk_size = 1000,
             chunk_overlap = 200,
             length_function = len
         )
+
+        #split the text into correct sized chunks for the model
         chunks = text_splitter.split_text(text = text)
     
         store_name = pdf.name[:-4]
@@ -55,7 +59,7 @@ def main():
                 VectorStore = pickle.load(f)
             
         else:
-            #embedd the tect to numerical vectors
+            #embedd the text to numerical vectors
             embeddings  = OpenAIEmbeddings()
             #organize the embeddings
             VectorStore = FAISS.from_texts(chunks, embedding = embeddings)
