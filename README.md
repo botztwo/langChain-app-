@@ -1,2 +1,2 @@
 # langChain-app-
-CHAT WITH PDF. LLM CHAT APP with PDF reader
+Small LLM PDF Chat App
